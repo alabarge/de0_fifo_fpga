@@ -6,6 +6,10 @@
 #define  ADC_INT_PKT       0x02
 #define  ADC_INT_ALL       0x04
 
+//
+//  NOTE: THIS ADC PRODUCES 1K PIPE PACKETS
+//
+
 // Number of 1K packets to collect before
 // issuing packet interrupt.
 #define  ADC_POOL_CNT      1
@@ -18,7 +22,7 @@
 // is 8K, so 8 would be used here. The OPTO
 // single pipe message transfer size is 1K,
 // so 1 would be used here.
-#define  ADC_XFER_SIZE     1
+#define  ADC_XFER_SIZE     8
 
 // ADC Sampling Rate, based on throughput
 // of hardware interface.

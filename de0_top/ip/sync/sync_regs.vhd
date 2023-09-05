@@ -5,7 +5,7 @@ use ieee.numeric_std.all;
 entity sync_regs is
    generic (
       C_DWIDTH             : integer   := 32;
-      C_NUM_REG            : integer   := 8
+      C_NUM_REG            : integer   := 16
    );
    port (
       clk                  : in    std_logic;
@@ -28,6 +28,7 @@ entity sync_regs is
       sync_ADR_END         : out   std_logic_vector(31 downto 0);
       sync_PKT_CNT         : out   std_logic_vector(31 downto 0);
       sync_PKT_XFER        : out   std_logic_vector(7 downto 0);
+      sync_DEBUG           : in    std_logic_vector(31 downto 0);
       sync_TEST_BIT        : out   std_logic
    );
 end sync_regs;
@@ -145,6 +146,8 @@ begin
          readdata             <= X"000000" & sync_PKT_XFER;
       elsif (rdCE(8) = '1') then
          readdata             <= X"0000000" & "000" & sync_TEST_BIT;
+      elsif (rdCE(9) = '1') then
+         readdata             <= sync_DEBUG;
       --
       -- READ BLOCK RAM
       --

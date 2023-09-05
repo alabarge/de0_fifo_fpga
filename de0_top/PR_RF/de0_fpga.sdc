@@ -31,13 +31,17 @@ set_max_delay  10.0 -from * -to [get_ports {oADC_CSn oADC_DIN oADC_SCLK }]
 #**************************************************************
 # Set False Path Outputs
 #**************************************************************
-
 set_false_path -from [get_clocks iCLK_50M] -to [get_clocks altera_reserved_tck]
 set_false_path -from [get_clocks altera_reserved_tck] -to [get_clocks iCLK_50M]
 set_false_path -from * -to [get_ports {oTP* oSTDOUT_UART_TX}]
 set_false_path -from * -to [get_ports {oLED*}]
 set_false_path -from * -to [get_ports {ioGPX*}]
 set_false_path -from * -to [get_ports {ioFIFO_DAT[*] oFIFO*}]
+
+# all NIOS control registers
+set_false_path -from [get_registers {*adc_* }] -to *
+set_false_path -from [get_registers {*sync_* }] -to *
+set_false_path -from [get_registers {*stamp_* }] -to *
 
 
 #**************************************************************

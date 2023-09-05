@@ -5,7 +5,7 @@ use ieee.numeric_std.all;
 entity sync_top is
    generic (
       C_DWIDTH             : integer              := 32;
-      C_NUM_REG            : integer              := 9
+      C_NUM_REG            : integer              := 16
    );
    port (
       clk                  : in    std_logic;
@@ -51,6 +51,7 @@ architecture rtl of sync_top is
    signal sync_ADR_END     : std_logic_vector(31 downto 0);
    signal sync_PKT_CNT     : std_logic_vector(31 downto 0);
    signal sync_PKT_XFER    : std_logic_vector(7 downto 0);
+   signal sync_DEBUG       : std_logic_vector(31 downto 0);
    signal syncInt          : std_logic_vector(4 downto 0);
 
    signal cpu_DIN          : std_logic_vector(31 downto 0);
@@ -93,11 +94,12 @@ begin
       sync_ADR_END         => sync_ADR_END,
       sync_PKT_CNT         => sync_PKT_CNT,
       sync_PKT_XFER        => sync_PKT_XFER,
+      sync_DEBUG           => sync_DEBUG,
       sync_TEST_BIT        => test_bit
    );
 
    --
-   -- 245 FIFO STATE MACHINE
+   -- 245 SYNC FIFO STATE MACHINE
    --
    FIFO_CTL_I: entity work.sync_ctl
    port map (
@@ -120,6 +122,7 @@ begin
       sync_ADR_END         => sync_ADR_END,
       sync_PKT_CNT         => sync_PKT_CNT,
       sync_PKT_XFER        => sync_PKT_XFER,
+      sync_DEBUG           => sync_DEBUG,
       sync_int             => syncInt,
       head_addr            => head_addr,
       tail_addr            => tail_addr,

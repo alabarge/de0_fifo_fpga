@@ -6,31 +6,27 @@ entity sync_ctl is
    port (
       clk                  : in    std_logic;
       reset_n              : in    std_logic;
-      -- Avalon Memory-Mapped Read Master
       m1_read              : out   std_logic;
       m1_rd_address        : out   std_logic_vector(31 downto 0);
       m1_readdata          : in    std_logic_vector(31 downto 0);
       m1_rd_waitreq        : in    std_logic;
       m1_rd_burstcount     : out   std_logic_vector(8 downto 0);
       m1_rd_datavalid      : in    std_logic;
-      -- CPU Block RAM Read-Write
       cpu_DIN              : out   std_logic_vector(31 downto 0);
       cpu_DOUT             : in    std_logic_vector(31 downto 0);
       cpu_ADDR             : in    std_logic_vector(9 downto 0);
       cpu_RE               : in    std_logic;
       cpu_WE               : in    std_logic;
-      -- Memory Head-Tail Pointers
       head_addr            : in    std_logic_vector(15 downto 0);
       tail_addr            : out   std_logic_vector(15 downto 0);
-      -- Registers
       sync_CONTROL         : in    std_logic_vector(31 downto 0);
       sync_ADR_BEG         : in    std_logic_vector(31 downto 0);
       sync_ADR_END         : in    std_logic_vector(31 downto 0);
       sync_PKT_CNT         : in    std_logic_vector(31 downto 0);
       sync_PKT_XFER        : in    std_logic_vector(7 downto 0);
       sync_STATUS          : out   std_logic_vector(31 downto 0);
+      sync_DEBUG           : out   std_logic_vector(31 downto 0);
       sync_int             : out   std_logic_vector(4 downto 0);
-      -- FT232H 245 FIFO Signals
       clkin                : in    std_logic;
       dat                  : inout std_logic_vector(7 downto 0);
       rxf_n                : in    std_logic;
@@ -235,6 +231,8 @@ begin
    sync_STATUS          <= sync_stat;
    xl_CLKIN_OFF         <= clkcnt_rst;
 
+   sync_DEBUG           <= head_addr_i & tail_addr;
+
    -- Master Read
    m1_rd_address        <= std_logic_vector(rd.addr);
    readdata             <= m1_readdata;
@@ -369,7 +367,6 @@ begin
          ft.run         <= xl_FIFO_RUN;
          ft.pi_head     <= rd.head;
          ft.pi_run      <= xl_PIPE_RUN;
-
 
          -- update status
          xl_RX_HEAD     <= std_logic_vector(ft.rx_head);

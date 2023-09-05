@@ -4,7 +4,7 @@
  * Machine generated for CPU 'cpu' in SOPC Builder design 'de0_fpga'
  * SOPC Builder design path: D:/de0_fifo_fpga/de0_top/PR_RF/de0_fpga.sopcinfo
  *
- * Generated: Mon Sep 04 11:04:15 PDT 2023
+ * Generated: Tue Sep 05 09:24:32 PDT 2023
  */
 
 /*
