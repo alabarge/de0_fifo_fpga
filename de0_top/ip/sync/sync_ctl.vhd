@@ -231,7 +231,7 @@ begin
    sync_STATUS          <= sync_stat;
    xl_CLKIN_OFF         <= clkcnt_rst;
 
-   sync_DEBUG           <= head_addr_i & tail_addr;
+   sync_DEBUG           <= std_logic_vector(head_addr_i) & std_logic_vector(tail_addr);
 
    -- Master Read
    m1_rd_address        <= std_logic_vector(rd.addr);
